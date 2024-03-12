@@ -1,1 +1,45 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leap Year Checker</title>
+</head>
+<body>
+
+<h1 id="apiResponse">Leap Year Checker</h1>
+
+<label for="timestampInput">Enter Timestamp (YYYY-MM-DD): </label>
+<input type="text" id="timestampInput" placeholder="YYYY-MM-DD">
+<button onclick="fetchData()">Check Leap Year</button>
+
+<script>
+    function fetchData() {
+        const timestamp = document.getElementById('timestampInput').value;
+
+        if (!timestamp) {
+            alert('Please enter a timestamp (YYYY-MM-DD)');
+            return;
+        }
+
+        const url = `https://postman-echo.com/time/leap?timestamp=${timestamp}`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const leap = data.leap;
+                document.getElementById('apiResponse').textContent = leap ? 'It is a leap year' : 'It is not a leap year';
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
+
+</body>
+</html>
