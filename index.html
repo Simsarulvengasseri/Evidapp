@@ -24,16 +24,14 @@
 
         const url = `https://postman-echo.com/time/leap?timestamp=${timestamp}`;
 
-        fetch(url)
+        fetch(url, { mode: 'no-cors' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
-            })
-            .then(data => {
-                const leap = data.leap;
-                document.getElementById('apiResponse').textContent = leap ? 'It is a leap year' : 'It is not a leap year';
+                // Since we're using "no-cors" mode, we can't access the response body directly
+                // You might want to handle the response differently or omit this part
+                document.getElementById('apiResponse').textContent = 'Response received (but not accessible due to CORS restrictions)';
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
